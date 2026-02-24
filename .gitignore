@@ -1,0 +1,2 @@
+chat-bot-config-steps.txt # Ignore the chat bot configuration steps file
+Secrets.yaml # Ignore the Secrets.yaml file that contains sensitive information such as API keys

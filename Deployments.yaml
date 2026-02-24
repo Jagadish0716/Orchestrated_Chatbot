@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chatbot-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chatbot
+  template:
+    metadata:
+      labels:
+        app: chatbot
+    spec:
+      imagePullSecrets:
+        - name: regcred
+      containers:
+        - name: chatbot
+          image: jagadish1607/chatbot-k8s:v1
+          ports:
+        - containerPort: 8501
+          env:
+        - name: GOOGLE_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: chatbot-secrets
+              key: GOOGLE_API_KEY
