@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: chatbot-deployment
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: chatbot
@@ -16,12 +16,20 @@ spec:
         - name: regcred
       containers:
         - name: chatbot
-          image: jagadish1607/chatbot-k8s:v1
+          image: jagadish1607/chatbot_k8s:v1
           ports:
-        - containerPort: 8501
+            - containerPort: 8501
+          resources:
+            requests:
+              cpu: "250m"      # Reserved CPU (0.25 core)
+              memory: "512Mi"  # Reserved Memory
+            limits:
+              cpu: "500m"      # Max CPU allowed
+              memory: "1Gi"    # Max Memory allowed
+          # ------------------------------------
           env:
-        - name: GOOGLE_API_KEY
-          valueFrom:
-            secretKeyRef:
-              name: chatbot-secrets
-              key: GOOGLE_API_KEY
+            - name: GOOGLE_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: chatbot-secrets
+                  key: GOOGLE_API_KEY
